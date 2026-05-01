@@ -25,6 +25,7 @@ import {
 import path from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session'; 
+import MongoStore from 'connect-mongo'; // NEW: Import MongoStore
 
 dotenv.config(); // NEW: Load environment variables
 
@@ -41,9 +42,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Setup session middleware
 app.use(session({
-    secret: process.env.SESSION_SECRET, // NEW: Use secret from .env
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({ 
+        mongoUrl: process.env.MONGO_URI 
+    })
 }));
 
 // --- Public Routes ---
@@ -78,3 +82,6 @@ app.post('/delete-property/:id', requireAuth, deleteProperty);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+// NEW: Export the app for Vercel Serverless Functions
+export default app;
