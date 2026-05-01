@@ -2,12 +2,15 @@ import Property from '../models/Property.js';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import dotenv from 'dotenv';
 
-// Cloudinary Configuration
+dotenv.config();
+
+// Cloudinary Configuration using environment variables
 cloudinary.config({
-    cloud_name: 'dcznllypy', // ضع اسم الكلاود هنا
-    api_key: '316511189895997',       // ضع مفتاح الـ API هنا
-    api_secret: 'u3VLQ4tT6ekcF3GWOfZMUSEbmUY'  // ضع الـ API Secret هنا
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 // Setup Cloudinary Storage for Multer
@@ -96,7 +99,6 @@ export const createProperty = async (req, res) => {
         res.redirect('/add-property'); 
     }
 };
-
 
 export const getEditPropertyPage = async (req, res) => {
     try {
@@ -205,6 +207,7 @@ export const handleLogin = (req, res) => {
         res.redirect('/login');
     }
 };
+
 export const handleLogout = (req, res) => {
     req.session.destroy();
     res.redirect('/login');
