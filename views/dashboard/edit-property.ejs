@@ -1,0 +1,105 @@
+<%- include('../partials/header') %>
+
+<main class="flex-grow pt-[100px] pb-16 px-4 md:px-12 flex justify-center items-start">
+    <div class="w-full max-w-3xl bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant p-8 md:p-12 text-right">
+        
+        <h1 class="font-headline-md text-3xl font-bold text-on-surface mb-2">تعديل بيانات العقار</h1>
+        <p class="text-on-surface-variant mb-8">يمكنك تحديث بيانات العقار أو تغيير الصورة المرفقة.</p>
+        
+        <!-- Form action points to the update route with the property ID -->
+        <form action="/edit-property/<%= property._id %>" method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <!-- Image Upload (Optional on update) -->
+           <div class="bg-slate-50 p-6 rounded-xl border border-outline-variant text-right">
+                <label class="block font-bold text-primary-container mb-4">صورة الغلاف (الصورة الرئيسية)</label>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Option 1: File Upload -->
+                    <div>
+                        <p class="text-sm font-bold text-on-surface-variant mb-2">خيار 1: رفع صورة من الجهاز</p>
+                        <input type="file" name="image" accept="image/*" class="w-full bg-white border border-outline-variant rounded-lg p-2.5 text-sm cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-container file:text-white hover:file:bg-opacity-90">
+                    </div>
+                    
+                    <!-- Option 2: Image URL -->
+                    <div>
+                        <p class="text-sm font-bold text-on-surface-variant mb-2">خيار 2: إضافة رابط الصورة (URL)</p>
+                        <input type="url" name="imageLink" placeholder="https://example.com/image.jpg" dir="ltr" class="w-full bg-white border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Images Section -->
+            <div class="bg-slate-50 p-6 rounded-xl border border-outline-variant text-right">
+                <label class="block font-bold text-primary-container mb-4">صور المعرض (الحد الأقصى 6 صور)</label>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Option 1: File Upload -->
+                    <div>
+                        <p class="text-sm font-bold text-on-surface-variant mb-2">خيار 1: رفع صور من الجهاز</p>
+                        <input type="file" name="gallery" accept="image/*" multiple class="w-full bg-white border border-outline-variant rounded-lg p-2.5 text-sm cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-container file:text-white hover:file:bg-opacity-90">
+                    </div>
+                    
+                    <!-- Option 2: Multiple URLs -->
+                    <div>
+                        <p class="text-sm font-bold text-on-surface-variant mb-2">خيار 2: روابط الصور (افصل بفاصلة ,)</p>
+                        <textarea name="galleryLinks" rows="2" placeholder="https://link1.jpg, https://link2.jpg" dir="ltr" class="w-full bg-white border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-sm"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Title -->
+            <div>
+                <label class="block mb-2 text-sm font-bold text-on-surface">عنوان العقار</label>
+                <!-- Notice the value attribute -->
+                <input type="text" name="title" value="<%= property.title %>" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right">
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block mb-2 text-sm font-bold text-on-surface">وصف العقار</label>
+                <!-- Textarea value goes between the tags -->
+                <textarea name="description" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right" rows="4"><%= property.description %></textarea>
+            </div>
+
+            <!-- Specs -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-on-surface">السعر (ج.م)</label>
+                    <input type="number" name="price" value="<%= property.price %>" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-on-surface">المساحة (م²)</label>
+                    <input type="number" name="area" value="<%= property.area %>" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-on-surface">عدد الغرف</label>
+                    <input type="number" name="rooms" value="<%= property.rooms %>" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-on-surface">عدد الحمامات</label>
+                    <input type="number" name="bathrooms" value="<%= property.bathrooms %>" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right">
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+                <label class="block mb-2 text-sm font-bold text-on-surface">الموقع</label>
+                <input type="text" name="location" value="<%= property.location %>" required class="w-full border border-outline-variant rounded-lg p-3 outline-none focus:border-primary-container text-right">
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="pt-4 flex flex-col md:flex-row-reverse gap-4">
+                <button type="submit" class="w-full md:w-auto bg-primary-container text-on-primary hover:bg-opacity-90 transition-colors font-bold px-8 py-3 rounded-lg shadow-sm">
+                    حفظ التعديلات
+                </button>
+                <a href="/dashboard" class="w-full md:w-auto text-center border border-outline text-on-surface hover:bg-surface-container-low transition-colors font-bold px-8 py-3 rounded-lg">
+                    إلغاء
+                </a>
+            </div>
+        </form>
+        
+    </div>
+</main>
+
+<%- include('../partials/footer') %>

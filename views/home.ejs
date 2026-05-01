@@ -1,0 +1,187 @@
+<%- include('partials/header') %>
+
+    <!-- 1. Hero Section (Clean & Minimalist) -->
+    <section class="relative h-[600px] w-full flex items-center justify-center">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFuv6-As6xFjGwlf2jgtcqgZQnfZLttH-LMaHxOGbtS4HQ4VrXDhqbQyPRheH4k2ukFl0-R7Do91dgD5bbTDWBwfPQvAwHZ9MujQBZvN7seS-OrxnwfsBFFzv3Q7qIfrrbuGPZ3QkDARU94Og-nHxxmfedLiXyVG0V2Vw-6gtmmu3FH5eY4DpJd2pov1nT_j-muOIc9HZlcB_6f0j4BNZvUuEhPnH5tMWiqHDiJSkCwH78iy6N1ZFDwkUeqqCbiOj-d4SzUHKWi5vZ" alt="Home" class="absolute inset-0 w-full h-full object-cover z-0">
+        <div class="absolute inset-0 bg-primary-container/50 z-10"></div>
+        
+        <div class="relative z-20 w-full max-w-[1280px] px-6 flex flex-col items-center mt-10">
+            <h1 class="font-display-lg text-white text-5xl md:text-6xl font-bold text-center mb-6 drop-shadow-lg">
+                ابحث عن منزل أحلامك
+            </h1>
+            <p class="text-white/90 text-xl md:text-2xl text-center mb-10 max-w-2xl drop-shadow-md">
+                اكتشف مجموعة من أرقى العقارات المصممة خصيصاً لتناسب أسلوب حياتك
+            </p>
+            
+            <!-- Clean Call to Action Button instead of the bulky form -->
+            <a href="/properties" class="bg-secondary-container text-on-secondary-container hover:bg-secondary-container/90 transition-all transform hover:-translate-y-1 font-bold text-lg py-4 px-10 rounded-full shadow-xl">
+                تصفح جميع العقارات الآن
+            </a>
+        </div>
+    </section>
+
+    <!-- 2. Top Cities Section -->
+    <section id="cities" class="bg-surface py-16 scroll-mt-24">
+        <div class="max-w-[1280px] mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="font-headline-md text-3xl font-bold text-on-surface mb-2">استكشف العقارات حسب المدينة</h2>
+                <p class="font-body-lg text-on-surface-variant">اختر وجهتك المفضلة واكتشف أفضل العروض</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 flex-row-reverse">
+                <!-- City Card 1 -->
+                <a href="/properties?location=القاهرة" class="relative h-64 rounded-xl overflow-hidden group">
+                    <img src="https://prod-images.nawy.com/processed/compound_image/image/9842/high.webp?q=80&w=600&auto=format&fit=crop" alt="Cairo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                    <h3 class="absolute bottom-4 right-4 text-white font-bold text-xl drop-shadow-md">القاهرة</h3>
+                </a>
+                <!-- City Card 2 -->
+                <a href="/properties?location=الإسكندرية" class="relative h-64 rounded-xl overflow-hidden group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEtUfLhQXEVv97yi999jgKcEDsi6jAXY7EOA&s?q=80&w=600&auto=format&fit=crop" alt="Alexandria" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                    <h3 class="absolute bottom-4 right-4 text-white font-bold text-xl drop-shadow-md">الإسكندرية</h3>
+                </a>
+                <!-- City Card 3 -->
+                <a href="/properties?location=الشيخ زايد" class="relative h-64 rounded-xl overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=600&auto=format&fit=crop" alt="Zayed" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                    <h3 class="absolute bottom-4 right-4 text-white font-bold text-xl drop-shadow-md">الشيخ زايد</h3>
+                </a>
+                <!-- City Card 4 -->
+                <a href="/properties?location=العاصمة" class="relative h-64 rounded-xl overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=600&auto=format&fit=crop" alt="New Capital" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                    <h3 class="absolute bottom-4 right-4 text-white font-bold text-xl drop-shadow-md">العاصمة الإدارية</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Featured Properties -->
+    <section id="featured" class="bg-surface-container-lowest max-w-[1280px] mx-auto px-6 py-16 scroll-mt-24">
+        <div class="flex flex-row-reverse justify-between items-end mb-10">
+            <div>
+                <h2 class="font-headline-md text-3xl font-bold text-on-surface text-right mb-2">أحدث العقارات المضافة</h2>
+                <p class="font-body-lg text-on-surface-variant text-right">اكتشف أحدث العروض المميزة لدينا قبل أي شخص آخر</p>
+            </div>
+            <a href="/properties" class="hidden md:block font-bold text-primary-container hover:underline">عرض كل العقارات &larr;</a>
+        </div>
+
+        <!-- Premium Property Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 flex-row-reverse">
+            <% if (typeof properties !== 'undefined' && properties.length > 0) { %>
+                <% properties.slice(0, 3).forEach(property => { %>
+                    <!-- Chic Card Design -->
+                    <article class="group bg-white rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.1)] border border-transparent hover:border-outline-variant overflow-hidden transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
+                        
+                        <!-- Image Container with Zoom effect -->
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="<%= property.image %>" alt="<%= property.title %>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            
+                            <!-- Sleek Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Blur Badge -->
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md text-primary-container font-bold text-xs px-4 py-1.5 rounded-full shadow-sm">
+                                مميز
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6 flex flex-col flex-grow text-right">
+                            <!-- Price (Highlighted) -->
+                            <div class="text-2xl font-extrabold text-primary-container mb-2">
+                                <%= property.price.toLocaleString() %> <span class="text-sm font-bold text-on-surface-variant">ج.م</span>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="font-bold text-lg text-on-surface line-clamp-1 mb-2"><%= property.title %></h3>
+                            
+                            <!-- Location -->
+                            <p class="text-sm text-on-surface-variant mb-5 flex items-center justify-end gap-1.5">
+                                <span class="truncate"><%= property.location %></span>
+                                <span class="material-symbols-outlined text-[18px] text-outline">location_on</span> 
+                            </p>
+                            
+                            <!-- Divider -->
+                            <div class="w-full h-px bg-surface-variant mb-5"></div>
+                            
+                            <!-- Amenities (With Icons) -->
+                            <div class="flex flex-row-reverse items-center justify-between text-on-surface-variant mb-6 px-1">
+                                <div class="flex flex-col items-center gap-1" title="عدد الغرف">
+                                    <span class="material-symbols-outlined text-[20px]">bed</span>
+                                    <span class="text-sm font-bold"><%= property.rooms %></span>
+                                </div>
+                                <div class="w-px h-8 bg-surface-variant"></div>
+                                <div class="flex flex-col items-center gap-1" title="عدد الحمامات">
+                                    <span class="material-symbols-outlined text-[20px]">shower</span>
+                                    <span class="text-sm font-bold"><%= property.bathrooms %></span>
+                                </div>
+                                <div class="w-px h-8 bg-surface-variant"></div>
+                                <div class="flex flex-col items-center gap-1" title="المساحة">
+                                    <span class="material-symbols-outlined text-[20px]">straighten</span>
+                                    <span class="text-sm font-bold"><%= property.area %> م²</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Full-width Action Button -->
+                            <div class="mt-auto">
+                                <a href="/property-details/<%= property._id %>" class="block w-full text-center bg-surface-variant text-on-surface font-bold py-3 rounded-xl hover:bg-primary-container hover:text-on-primary transition-colors duration-300">
+                                    عرض التفاصيل
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                <% }) %>
+            <% } else { %>
+                <div class="col-span-3 text-center text-on-surface-variant py-8">
+                    لا توجد عقارات مضافة حتى الآن.
+                </div>
+            <% } %>
+        </div>
+        <div class="mt-8 text-center md:hidden">
+            <a href="/properties" class="inline-block font-bold bg-primary-container text-on-primary py-3 px-8 rounded-lg">عرض كل العقارات</a>
+        </div>
+    </section>
+
+    <!-- 4. Why Choose Us Section -->
+    <section id="why-us" class="bg-surface py-16 scroll-mt-24">
+        <div class="max-w-[1280px] mx-auto px-6 text-center">
+            <h2 class="font-headline-md text-3xl font-bold text-on-surface mb-12">لماذا تختار مَـلاذ العـقـاريـة؟</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 flex-row-reverse">
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant text-center hover:-translate-y-2 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-5xl text-primary-container mb-4">security</span>
+                    <h3 class="font-bold text-xl text-on-surface mb-2">معاملات آمنة وموثوقة</h3>
+                    <p class="text-on-surface-variant">جميع العقارات المعروضة تم التأكد من صحة أوراقها لضمان تجربة آمنة تماماً.</p>
+                </div>
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant text-center hover:-translate-y-2 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-5xl text-primary-container mb-4">monetization_on</span>
+                    <h3 class="font-bold text-xl text-on-surface mb-2">أفضل الأسعار في السوق</h3>
+                    <p class="text-on-surface-variant">نضمن لك الحصول على أفضل قيمة مقابل استثمارك بدون عمولات خفية.</p>
+                </div>
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant text-center hover:-translate-y-2 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-5xl text-primary-container mb-4">support_agent</span>
+                    <h3 class="font-bold text-xl text-on-surface mb-2">دعم فني واستشاري 24/7</h3>
+                    <p class="text-on-surface-variant">فريقنا متواجد دائماً للرد على استفساراتك ومساعدتك في اختيار الأنسب لك.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Call To Action (CTA) -->
+    <section class="max-w-[1280px] mx-auto px-6 pb-16">
+        <div class="bg-primary-container rounded-3xl p-10 md:p-16 flex flex-col md:flex-row-reverse items-center justify-between shadow-lg relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+            <div class="relative z-10 text-right md:w-2/3 mb-8 md:mb-0">
+                <h2 class="text-3xl md:text-4xl font-bold text-on-primary mb-4">هل تمتلك عقاراً وترغب في بيعه؟</h2>
+                <p class="text-on-primary/80 text-lg">انضم إلينا الآن واعرض عقارك للآلاف من المشترين المحتملين يومياً. تواصل معنا لنبدأ فوراً.</p>
+            </div>
+            <div class="relative z-10 md:w-1/3 flex justify-center md:justify-start">
+                <a href="https://wa.me/201020699718?text=مرحباً، أمتلك عقاراً وأرغب في عرضه للبيع من خلال مؤسستكم." target="_blank" rel="noopener noreferrer" class="bg-surface-container-lowest text-primary-container font-bold text-lg py-4 px-10 rounded-xl hover:bg-surface transition-colors shadow-md">
+                    تواصل معنا لعرض عقارك
+                </a>
+            </div>
+        </div>
+    </section>
+
+<%- include('partials/footer') %>

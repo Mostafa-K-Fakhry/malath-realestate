@@ -1,0 +1,127 @@
+<%- include('../partials/header') %>
+
+<main class="flex-grow pt-[100px] pb-12 px-4 md:px-12 max-w-[1280px] mx-auto w-full">
+  <!-- Chic Slider Section -->
+    <div class="mb-10 bg-surface-container-lowest p-4 rounded-2xl shadow-sm border border-outline-variant">
+        
+        <!-- Main Large Image -->
+        <div class="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden mb-4 bg-surface-variant">
+            <img id="mainImage" src="<%= property.image %>" alt="<%= property.title %>" class="w-full h-full object-cover transition-opacity duration-300">
+        </div>
+
+        <!-- Thumbnails Scrollable Row -->
+        <div class="flex gap-3 overflow-x-auto pb-2 scroll-smooth" style="scrollbar-width: thin;">
+            
+            <!-- Cover Image as First Thumbnail (Active by default) -->
+            <div class="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden cursor-pointer border-2 border-primary-container opacity-100 transition-all duration-200 thumb-img">
+                <img src="<%= property.image %>" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" onclick="changeMainImage(this)">
+            </div>
+
+            <!-- Gallery Images Thumbnails -->
+            <% if (property.gallery && property.gallery.length > 0) { %>
+                <% property.gallery.forEach(image => { %>
+                    <div class="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent opacity-60 hover:opacity-100 transition-all duration-200 thumb-img">
+                        <img src="<%= image %>" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" onclick="changeMainImage(this)">
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Simple Vanilla JS for Slider Logic -->
+    <script>
+        function changeMainImage(clickedElement) {
+            // 1. Get the main image element
+            const mainImage = document.getElementById('mainImage');
+            
+            // 2. Add a quick fade-out effect
+            mainImage.style.opacity = '0.7';
+            
+            // 3. Change the source and fade back in after a tiny delay
+            setTimeout(() => {
+                mainImage.src = clickedElement.src;
+                mainImage.style.opacity = '1';
+            }, 150);
+
+            // 4. Reset all thumbnails to inactive state (transparent border, lower opacity)
+            const allThumbs = document.querySelectorAll('.thumb-img');
+            allThumbs.forEach(thumb => {
+                thumb.classList.remove('border-primary-container', 'opacity-100');
+                thumb.classList.add('border-transparent', 'opacity-60');
+            });
+
+            // 5. Set the clicked thumbnail to active state
+            const activeThumbContainer = clickedElement.parentElement;
+            activeThumbContainer.classList.remove('border-transparent', 'opacity-60');
+            activeThumbContainer.classList.add('border-primary-container', 'opacity-100');
+        }
+    </script>
+
+    <!-- Content Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <!-- Main Details -->
+        <div class="md:col-span-8 flex flex-col gap-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-surface-container-highest pb-6">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-DEFAULT font-label-sm text-sm"><%= property.status === 'Active' ? 'متاح' : 'مباع' %></span>
+                        <span class="text-on-surface-variant font-label-sm text-sm"><%= property.location %></span>
+                    </div>
+                    <h1 class="font-headline-md text-3xl font-bold text-on-surface"><%= property.title %></h1>
+                </div>
+                <div class="text-right">
+                    <div class="font-display-lg text-3xl font-bold text-primary-container"><%= property.price %> ج.م </div>
+                </div>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-4 bg-surface-container-lowest border rounded-lg text-center shadow-sm">
+                    <div class="text-on-surface-variant font-label-sm mb-1">المساحة</div>
+                    <div class="font-bold text-on-surface"><%= property.area %> م²</div>
+                </div>
+                <div class="p-4 bg-surface-container-lowest border rounded-lg text-center shadow-sm">
+                    <div class="text-on-surface-variant font-label-sm mb-1">غرف النوم</div>
+                    <div class="font-bold text-on-surface"><%= property.rooms %></div>
+                </div>
+                <div class="p-4 bg-surface-container-lowest border rounded-lg text-center shadow-sm">
+                    <div class="text-on-surface-variant font-label-sm mb-1">دورات المياه</div>
+                    <div class="font-bold text-on-surface"><%= property.bathrooms %></div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container-highest">
+                <h2 class="font-title-sm font-bold text-on-surface mb-4">وصف العقار</h2>
+                <p class="font-body-lg text-on-surface-variant leading-relaxed">
+                    <%= property.description %>
+                </p>
+            </div>
+        </div>
+
+        
+       <!-- Seller Info Card (Right Side) -->
+        <div class="md:col-span-4">
+            <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-6 text-center md:text-right sticky top-[100px]">
+                <h3 class="font-bold text-lg text-on-surface mb-1">مؤسسة الأفق العقارية</h3>
+                <p class="text-sm text-on-surface-variant mb-6">وسيط عقاري معتمد</p>
+                
+                <!-- Dynamic WhatsApp Button -->
+                <a href="https://wa.me/201020699718?text=مرحباً، أستفسر بخصوص العقار: <%= property.title %>، المعروض بسعر <%= property.price.toLocaleString() %> جنيه." 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white font-bold py-3 px-4 rounded-xl hover:bg-[#20b858] transition-colors shadow-sm">
+                    
+                    <span class="pt-1">تواصل عبر واتساب</span>
+                    
+                    <!-- WhatsApp SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>

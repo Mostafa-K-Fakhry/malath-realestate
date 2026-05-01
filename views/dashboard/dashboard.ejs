@@ -1,0 +1,92 @@
+<%- include('../partials/header') %>
+
+<main class="flex-grow pt-[100px] pb-12 px-4 md:px-12 max-w-[1280px] mx-auto w-full grid grid-cols-1 md:grid-cols-4 gap-8">
+    
+    <!-- Dashboard Sidebar Menu -->
+    <aside class="md:col-span-1 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-4 h-fit sticky top-[100px]">
+        <div class="mb-6 pb-4 border-b text-right">
+            <h2 class="font-bold text-xl text-primary-container">مصطفى خالد</h2>
+            <p class="text-sm text-on-surface-variant">حساب مالك موثق</p>
+        </div>
+        <nav class="flex flex-col gap-2">
+            <a href="/dashboard" class="p-3 bg-slate-100 rounded-lg text-amber-600 font-bold border-r-4 border-amber-500 text-right">لوحة التحكم</a>
+            <a href="/add-property" class="p-3 text-slate-500 hover:bg-slate-50 rounded-lg text-right">إضافة عقار</a>
+            <a href="/logout" class="p-3 text-red-500 hover:bg-red-50 rounded-lg text-right mt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+                تسجيل الخروج
+                <span class="material-symbols-outlined text-[18px]">logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Dashboard -->
+    <div class="md:col-span-3">
+        <h1 class="text-3xl font-bold text-primary-container mb-6 text-right">نظرة عامة</h1>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-right">
+            <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant">
+                <p class="text-sm text-on-surface-variant mb-1">إجمالي العقارات</p>
+                <p class="text-2xl font-bold text-primary-container"><%= totalProperties %></p>
+            </div>
+            <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant">
+                <p class="text-sm text-on-surface-variant mb-1">عقارات نشطة</p>
+                <p class="text-2xl font-bold text-primary-container"><%= activeProperties %></p>
+            </div>
+        </div>
+
+        <!-- Property Table -->
+        <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden p-6 text-right">
+            <h2 class="font-bold text-xl mb-4 text-primary-container">أحدث العقارات المضافة</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-surface-container-low text-on-surface-variant text-sm">
+                        <tr>
+                            <th class="p-4 font-medium text-right">العقار</th>
+                            <th class="p-4 font-medium text-right">السعر</th>
+                            <th class="p-4 font-medium text-right">الحالة</th>
+                            <th class="p-4 font-medium text-left">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant text-sm">
+                        <% if (properties.length > 0) { %>
+                            <% properties.forEach(property => { %>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="p-4 text-primary-container font-bold text-right"><%= property.title %></td>
+                                    <td class="p-4 text-primary-container text-right"><%= property.price.toLocaleString() %> جنيه</td>
+                                    <td class="p-4 text-right">
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                                            <%= property.status %>
+                                        </span>
+                                    </td>
+                                    <td class="p-4">
+                                        <div class="flex gap-2 justify-end">
+                                            <!-- Edit Link -->
+                                            <a href="/edit-property/<%= property._id %>" class="p-2 text-on-surface-variant hover:text-primary-container hover:bg-surface-variant rounded-lg transition-colors" title="تعديل">
+                                                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">edit</span>
+                                            </a>
+                                            
+                                            <!-- Delete Form -->
+                                            <form action="/delete-property/<%= property._id %>" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا العقار؟');">
+                                                <button type="submit" class="p-2 text-on-surface-variant hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="حذف">
+                                                    <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">delete</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" class="p-4 text-center text-on-surface-variant">
+                                    لا توجد عقارات مضافة حتى الآن.
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>

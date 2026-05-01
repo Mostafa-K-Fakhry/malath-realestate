@@ -1,0 +1,157 @@
+<%- include('../partials/header') %>
+
+<!-- Main Content Area -->
+<main class="flex-grow pt-[100px] pb-12 px-4 md:px-12 max-w-[1280px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Right Sidebar (Filters Form) -->
+    <aside class="lg:col-span-3">
+        <form action="/properties" method="GET" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant p-6 sticky top-[100px]">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-title-sm text-on-surface font-bold">تصفية النتائج</h2>
+                <a href="/properties" class="text-primary-container font-label-sm flex items-center gap-1 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+                    إعادة ضبط
+                </a>
+            </div>
+
+            <!-- Location Filter -->
+            <div class="mb-5">
+                <label class="block font-label-sm text-on-surface-variant mb-2">الموقع</label>
+                <input type="text" name="location" value="<%= typeof searchQuery !== 'undefined' && searchQuery.location ? searchQuery.location : '' %>" placeholder="ابحث بالمدينة أو الحي..." class="w-full bg-surface border border-outline-variant rounded-xl py-3 px-4 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all text-right">
+            </div>
+
+            <!-- Property Type Filter -->
+            <div class="mb-5">
+                <label class="block font-label-sm text-on-surface-variant mb-2">نوع العقار</label>
+                <select name="type" class="w-full bg-surface border border-outline-variant rounded-xl py-3 px-4 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all text-right appearance-none cursor-pointer">
+                    <option value="الكل" <%= typeof searchQuery !== 'undefined' && searchQuery.type === 'الكل' ? 'selected' : '' %>>الكل</option>
+                    <option value="فيلا" <%= typeof searchQuery !== 'undefined' && searchQuery.type === 'فيلا' ? 'selected' : '' %>>فيلا</option>
+                    <option value="شقة" <%= typeof searchQuery !== 'undefined' && searchQuery.type === 'شقة' ? 'selected' : '' %>>شقة</option>
+                </select>
+            </div>
+
+            <!-- Max Price Filter -->
+            <div class="mb-5">
+                <label class="block font-label-sm text-on-surface-variant mb-2">السعر الأقصى (جنيه)</label>
+                <input type="number" name="maxPrice" value="<%= typeof searchQuery !== 'undefined' && searchQuery.maxPrice ? searchQuery.maxPrice : '' %>" placeholder="مثال: 5000000" class="w-full bg-surface border border-outline-variant rounded-xl py-3 px-4 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all text-right">
+            </div>
+
+            <!-- Sorting -->
+            <div class="mb-8">
+                <label class="block font-label-sm text-on-surface-variant mb-2">ترتيب حسب</label>
+                <select name="sort" class="w-full bg-surface border border-outline-variant rounded-xl py-3 px-4 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all text-right appearance-none cursor-pointer">
+                    <option value="الأحدث" <%= typeof searchQuery !== 'undefined' && searchQuery.sort === 'الأحدث' ? 'selected' : '' %>>الأحدث</option>
+                    <option value="الأقل سعراً" <%= typeof searchQuery !== 'undefined' && searchQuery.sort === 'الأقل سعراً' ? 'selected' : '' %>>الأقل سعراً</option>
+                    <option value="الأعلى سعراً" <%= typeof searchQuery !== 'undefined' && searchQuery.sort === 'الأعلى سعراً' ? 'selected' : '' %>>الأعلى سعراً</option>
+                </select>
+            </div>
+
+            <!-- Search Button -->
+            <button type="submit" class="w-full py-3.5 bg-primary-container text-on-primary font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                تطبيق الفلاتر
+            </button>
+        </form>
+    </aside>
+
+    <!-- Main Content (Left) -->
+    <section class="lg:col-span-9">
+        
+        <!-- Results Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-outline-variant pb-4">
+            <div>
+                <h1 class="text-3xl font-bold text-on-surface">العقارات المتاحة</h1>
+                <!-- We hide the specific count here since we are paginating, or you can keep it if you pass totalDocs from controller -->
+            </div>
+        </div>
+
+        <!-- Premium Property Grid (Changed to 2 columns max) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <% if (properties.length > 0) { %>
+                <% properties.forEach(property => { %>
+                    <!-- Chic Card Design -->
+                    <article class="group bg-surface-container-lowest rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.1)] border border-transparent hover:border-outline-variant overflow-hidden transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
+                        
+                        <!-- Image Container with Zoom effect -->
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="<%= property.image %>" alt="<%= property.title %>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            
+                            <!-- Sleek Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Blur Badge -->
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md text-primary-container font-bold text-xs px-4 py-1.5 rounded-full shadow-sm">
+                                للبيع
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6 flex flex-col flex-grow text-right">
+                            <!-- Price (Highlighted) -->
+                            <div class="text-2xl font-extrabold text-primary-container mb-2">
+                                <%= property.price.toLocaleString() %> <span class="text-sm font-bold text-on-surface-variant">ج.م</span>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="font-bold text-lg text-on-surface line-clamp-1 mb-2"><%= property.title %></h3>
+                            
+                            <!-- Location -->
+                            <p class="text-sm text-on-surface-variant mb-5 flex items-center justify-end gap-1.5">
+                                <span class="truncate"><%= property.location %></span>
+                                <span class="material-symbols-outlined text-[18px] text-outline">location_on</span> 
+                            </p>
+                            
+                            <!-- Divider -->
+                            <div class="w-full h-px bg-surface-variant mb-5"></div>
+                            
+                            <!-- Amenities (With Icons) -->
+                            <div class="flex flex-row-reverse items-center justify-between text-on-surface-variant mb-6 px-1">
+                                <div class="flex flex-col items-center gap-1" title="عدد الغرف">
+                                    <span class="material-symbols-outlined text-[20px]">bed</span>
+                                    <span class="text-sm font-bold"><%= property.rooms %></span>
+                                </div>
+                                <div class="w-px h-8 bg-surface-variant"></div>
+                                <div class="flex flex-col items-center gap-1" title="عدد الحمامات">
+                                    <span class="material-symbols-outlined text-[20px]">shower</span>
+                                    <span class="text-sm font-bold"><%= property.bathrooms %></span>
+                                </div>
+                                <div class="w-px h-8 bg-surface-variant"></div>
+                                <div class="flex flex-col items-center gap-1" title="المساحة">
+                                    <span class="material-symbols-outlined text-[20px]">straighten</span>
+                                    <span class="text-sm font-bold"><%= property.area %> م²</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Full-width Action Button -->
+                            <div class="mt-auto">
+                                <a href="/property-details/<%= property._id %>" class="block w-full text-center bg-surface-variant text-on-surface font-bold py-3 rounded-xl hover:bg-primary-container hover:text-on-primary transition-colors duration-300">
+                                    عرض التفاصيل
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                <% }) %>
+            <% } else { %>
+                <div class="col-span-full flex flex-col items-center justify-center py-20 text-on-surface-variant bg-surface-container-lowest rounded-2xl border border-dashed border-outline-variant">
+                    <span class="material-symbols-outlined text-6xl mb-4 text-outline">search_off</span>
+                    <p class="text-xl font-bold">لا توجد عقارات مطابقة لخيارات البحث</p>
+                    <p class="mt-2 text-sm">جرب تغيير الفلاتر للوصول لنتائج أفضل.</p>
+                </div>
+            <% } %>
+        </div>
+
+        <!-- NEW: Pagination Section -->
+        <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+            <div class="flex justify-center items-center gap-2 mt-12 mb-4 flex-row-reverse">
+                <% for(let i = 1; i <= totalPages; i++) { %>
+                    <a href="/properties?page=<%= i %>&location=<%= typeof searchQuery !== 'undefined' && searchQuery.location ? searchQuery.location : '' %>&type=<%= typeof searchQuery !== 'undefined' && searchQuery.type ? searchQuery.type : '' %>&maxPrice=<%= typeof searchQuery !== 'undefined' && searchQuery.maxPrice ? searchQuery.maxPrice : '' %>&sort=<%= typeof searchQuery !== 'undefined' && searchQuery.sort ? searchQuery.sort : '' %>"
+                       class="w-12 h-12 flex items-center justify-center rounded-xl font-bold text-lg transition-all <%= typeof currentPage !== 'undefined' && currentPage === i ? 'bg-primary-container text-on-primary shadow-md' : 'bg-surface-container-lowest border border-outline-variant text-on-surface hover:bg-surface-variant' %>">
+                        <%= i %>
+                    </a>
+                <% } %>
+            </div>
+        <% } %>
+
+    </section>
+</main>
+
+<%- include('../partials/footer') %>
