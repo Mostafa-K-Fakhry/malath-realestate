@@ -1,6 +1,12 @@
 import express from 'express';
 import connectDB from './config/db.js';
-import dotenv from 'dotenv'; // NEW: Import dotenv
+import dotenv from 'dotenv';
+import session from 'express-session'; 
+import MongoStore from 'connect-mongo';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Import Controllers
 import { 
     getHomePage,
     getPropertiesPage,
@@ -22,25 +28,25 @@ import {
      requireAuth 
 } from './controllers/dashboardController.js';
 
-import path from 'path';
-import { fileURLToPath } from 'url';
-import session from 'express-session'; 
-import MongoStore from 'connect-mongo'; // NEW: Import MongoStore
+dotenv.config();
 
-dotenv.config(); // NEW: Load environment variables
+// Fix directory path for Vercel
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = process.env.PORT || 3000; // Updated for deployment
+const port = process.env.PORT || 3000;
 
-// Connect to the database
 connectDB();
 
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+
+// Crucial fix for Vercel views and static files
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
 
-// Setup session middleware
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -83,5 +89,4 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-// NEW: Export the app for Vercel Serverless Functions
 export default app;
