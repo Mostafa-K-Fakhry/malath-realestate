@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://via.placeholder.com/150x150.png?text=Malath+Logo" alt="Malath Real Estate Logo" width="120" height="120" />
+  
 
   # 🏙️ Malath Real Estate (مَـلاذ العقارية)
 
