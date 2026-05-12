@@ -4,6 +4,8 @@
   # 🏙️ Malath Real Estate (مَـلاذ العقارية)
 
   **A Premium, Full-Stack Real Estate Management & Discovery Platform.**
+  
+  ### 🔗 [Live Preview: malath-realestate.vercel.app](https://malath-realestate.vercel.app/)
 
   [![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg?style=for-the-badge&logo=node.js)](https://nodejs.org/)
   [![Express.js](https://img.shields.io/badge/Express.js-5.x-lightgrey.svg?style=for-the-badge&logo=express)](https://expressjs.com/)
@@ -218,16 +220,6 @@ This project is configured out-of-the-box for serverless deployment on **Vercel*
 
 ## 📱 Mobile Responsiveness
 The application UI is engineered with a mobile-first philosophy. Using modern CSS Flexbox/Grid techniques, the layout fluidly adapts to mobile phones, tablets, and desktop displays. Navigation menus and property grids gracefully degrade to accommodate smaller viewports without sacrificing functionality.
-
----
-
-## 📸 Interface Screenshots
-
-| Home Page | Properties Catalog | Admin Dashboard |
-|-----------|--------------------|-----------------|
-| <img src="https://via.placeholder.com/400x250.png?text=Home+Page+View" alt="Home Page" width="300" /> | <img src="https://via.placeholder.com/400x250.png?text=Property+Listings" alt="Properties Page" width="300" /> | <img src="https://via.placeholder.com/400x250.png?text=Admin+Dashboard" alt="Admin Dashboard" width="300" /> |
-
-*(Note: Replace placeholder links with actual application screenshots)*
 
 ---
 
