@@ -254,6 +254,7 @@ This project is licensed under the **ISC License**. See the `package.json` file 
 
 **Malath Real Estate Team**
 - GitHub: [@Mostafa-K-Fakhry](https://github.com/Mostafa-K-Fakhry)
+- GitHub: [@yasu023](https://github.com/yasu023)
 
 ---
 
